@@ -1,15 +1,20 @@
-import scrapetube
-from yt_concate.settings import API_KEY
-
-print(API_KEY)
-def get_video_id(channel_id):
-    base_video_url = 'https://www.youtube.com/watch?v='
-    videos = scrapetube.get_channel(channel_id)
-
-    for video in videos:
-        video1 = video['videoId']
-        url = base_video_url + video1
-        print(url)
+from yt_concate.pipeline.Steps.get_video_list import GetVideoList
+from yt_concate.pipeline.Steps.step import StepException
+from yt_concate.pipeline.pipeline import Pipeline
 
 CHANNEL_ID = 'UCZd4BcnCEHzfrWoMKRaxPTQ'
-# get_video_id(CHANNEL_ID)
+
+
+def main():
+    inputs = {
+        'channel_id': CHANNEL_ID
+    }
+    steps = [
+        GetVideoList(),
+        ]
+    p = Pipeline(steps)
+    p.run(inputs)
+
+
+if __name__ == '__main__':
+    main()
